@@ -13,6 +13,13 @@ const weekdays = (start: string, end: string, saturdayEnd?: string) => [
 
 await mongoose.connect(config.mongoUri);
 
+// Para no pisar datos reales: si ya hay un local cargado, solo se reemplaza con --reset.
+if ((await Business.exists({})) && !process.argv.includes('--reset')) {
+  console.log('Ya hay datos cargados. Para reemplazarlos por los de ejemplo: npm run seed -- --reset');
+  await mongoose.disconnect();
+  process.exit(0);
+}
+
 await Business.deleteMany({});
 await Business.create({
   name: 'Espacio Prisma',

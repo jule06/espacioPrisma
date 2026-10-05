@@ -45,6 +45,37 @@ No hay usuario y contraseña: al panel se entra solo con Google. Mientras no hay
 
 Sin calendario conectado, todo funciona igual usando solo MongoDB.
 
+## Deploy en Railway
+
+Un solo servicio: Express sirve la API y el front compilado (`client/dist`). La config está en `railway.json` y `package.json` (raíz).
+
+1. **New Project → Deploy from GitHub repo** → este repo (raíz del repo, sin "Root Directory").
+2. Agregar **MongoDB** al proyecto (+ New → Database → MongoDB). Expone `MONGO_URL`; en el servicio de la app agregar la variable `MONGO_URL=${{MongoDB.MONGO_URL}}`.
+3. **Volumen** para los comprobantes: en el servicio → Settings → Volumes → montar en `/data` y poner `UPLOADS_DIR=/data/uploads`.
+4. **Settings → Networking → Generate Domain** (ej. `espacio-prisma.up.railway.app`).
+5. **Variables** del servicio:
+   ```
+   NODE_ENV=production
+   CLIENT_URL=https://TU-DOMINIO.up.railway.app
+   TIMEZONE=America/Argentina/Buenos_Aires
+   JWT_SECRET=<cadena larga al azar>
+   ADMIN_EMAILS=...
+   GOOGLE_CLIENT_ID=...
+   GOOGLE_CLIENT_SECRET=...
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=465
+   SMTP_SECURE=true
+   SMTP_USER=...
+   SMTP_PASS=...
+   MAIL_FROM="Espacio Prisma <...>"
+   NOTIFY_EMAIL=...
+   UPLOADS_DIR=/data/uploads
+   ```
+   `PORT` lo pone Railway solo.
+6. En Google Cloud agregar el origen `https://TU-DOMINIO.up.railway.app` y la URI `https://TU-DOMINIO.up.railway.app/api/admin/auth/google/callback`.
+7. El primer arranque carga los datos iniciales (local, profesional, servicios) si la base está vacía; los siguientes no tocan nada.
+8. Entrar a `/panel`, ingresar con Google y **Conectar Google Calendar** (la conexión de desarrollo no se copia: es otra base).
+
 ## Emails
 
 Configurar `SMTP_*`, `MAIL_FROM` y `NOTIFY_EMAIL` en `server/.env`. Sin SMTP, los correos se imprimen en la consola del servidor.

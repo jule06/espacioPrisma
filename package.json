@@ -1,0 +1,13 @@
+{
+  "name": "espacio-prisma",
+  "private": true,
+  "description": "Agenda de turnos de Espacio Prisma: front (client/) y API (server/) en un solo servicio.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm ci --include=dev --prefix server && npm ci --include=dev --prefix client && npm run build --prefix client && npm run build --prefix server",
+    "start": "node server/dist/seed.js && npm start --prefix server",
+    "seed": "npm run seed --prefix server"
+  }
+}

@@ -9,7 +9,8 @@ function env(name: string, fallback?: string): string {
 
 export const config = {
   port: Number(env('PORT', '4600')),
-  mongoUri: env('MONGO_URI', 'mongodb://localhost:27017/agenda_turnos'),
+  // Railway expone MONGO_URL con su plugin de MongoDB.
+  mongoUri: process.env.MONGO_URI || process.env.MONGO_URL || 'mongodb://localhost:27017/agenda_turnos',
   // URL pública del front: se usa en los links de los emails.
   clientUrl: env('CLIENT_URL', 'http://localhost:5600'),
   // Todas las direcciones desde las que se puede abrir el front (ej. localhost y un túnel).
@@ -38,5 +39,8 @@ export const config = {
   },
   mailFrom: env('MAIL_FROM', 'Agenda de turnos <no-reply@local.test>'),
   notifyEmail: process.env.NOTIFY_EMAIL || undefined,
-  uploadsDir: fileURLToPath(new URL('../uploads/', import.meta.url)),
+  // En Railway conviene apuntarlo a un volumen (ej. UPLOADS_DIR=/data/uploads) para no perder los comprobantes en cada deploy.
+  uploadsDir: process.env.UPLOADS_DIR || fileURLToPath(new URL('../uploads/', import.meta.url)),
+  // Front compilado (client/dist). En producción Express lo sirve junto con la API.
+  clientDistDir: fileURLToPath(new URL('../../client/dist/', import.meta.url)),
 };
