@@ -10,7 +10,9 @@ function env(name: string, fallback?: string): string {
 export const config = {
   port: Number(env('PORT', '4600')),
   // Railway expone MONGO_URL con su plugin de MongoDB.
-  mongoUri: process.env.MONGO_URI || process.env.MONGO_URL || 'mongodb://localhost:27017/agenda_turnos',
+  mongoUri: (process.env.MONGO_URI || process.env.MONGO_URL || 'mongodb://localhost:27017').trim(),
+  // La URL de Railway no trae el nombre de la base: sin esto Mongo usaría "test".
+  mongoDbName: process.env.MONGO_DB || 'agenda_turnos',
   // URL pública del front: se usa en los links de los emails.
   clientUrl: env('CLIENT_URL', 'http://localhost:5600'),
   // Todas las direcciones desde las que se puede abrir el front (ej. localhost y un túnel).

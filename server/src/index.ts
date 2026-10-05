@@ -47,7 +47,7 @@ const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 };
 app.use(errorHandler);
 
-await mongoose.connect(config.mongoUri);
+await mongoose.connect(config.mongoUri, { dbName: config.mongoDbName });
 console.log('[db] conectado a MongoDB');
 startJobs();
 app.listen(config.port, () => console.log(`[api] escuchando en el puerto ${config.port}`));

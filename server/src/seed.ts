@@ -11,7 +11,7 @@ const weekdays = (start: string, end: string, saturdayEnd?: string) => [
   ...(saturdayEnd ? [{ weekday: 6, start, end: saturdayEnd }] : []),
 ];
 
-await mongoose.connect(config.mongoUri);
+await mongoose.connect(config.mongoUri, { dbName: config.mongoDbName });
 
 // Para no pisar datos reales: si ya hay un local cargado, solo se reemplaza con --reset.
 if ((await Business.exists({})) && !process.argv.includes('--reset')) {
