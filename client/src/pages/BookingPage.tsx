@@ -5,12 +5,16 @@ import { formatRange, initials, money } from '../lib/format'
 
 interface Props {
   business: BusinessInfo
+  /** Servicio elegido desde la landing. */
+  initialServiceId?: string
   onBooked: (code: string) => void
   onLookup: (code: string) => void
 }
 
-export function BookingPage({ business, onBooked, onLookup }: Props) {
-  const [serviceId, setServiceId] = useState<string>()
+export function BookingPage({ business, initialServiceId, onBooked, onLookup }: Props) {
+  const [serviceId, setServiceId] = useState<string | undefined>(() =>
+    business.services.some((s) => s.id === initialServiceId) ? initialServiceId : undefined,
+  )
   const [slot, setSlot] = useState<Slot | null>(null)
   const [refreshKey, setRefreshKey] = useState(0)
   const [showLookup, setShowLookup] = useState(false)

@@ -54,7 +54,7 @@ async function context(booking: BookingDoc) {
     address: business?.address ?? '',
     proName: pro?.name ?? '',
     when: formatLong(booking.start),
-    manageUrl: `${config.clientUrl}/?codigo=${booking.code}`,
+    manageUrl: `${config.clientUrl}/reservar?codigo=${booking.code}`,
   };
 }
 

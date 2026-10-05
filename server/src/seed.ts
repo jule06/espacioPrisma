@@ -23,8 +23,8 @@ if ((await Business.exists({})) && !process.argv.includes('--reset')) {
 await Business.deleteMany({});
 await Business.create({
   name: 'Espacio Prisma',
-  address: 'Av. Corrientes 1234 · CABA',
-  hoursLabel: 'Lunes a sábado',
+  address: 'Liniers · Versalles · Flores · A domicilio',
+  hoursLabel: '',
   depositPercent: 30,
   bankTransfer: { holder: 'Espacio Prisma', alias: 'espacio.prisma.mp', cbu: '0000003100012345678901', bank: 'Mercado Pago' },
 });
