@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import multer from 'multer';
 import { ZodError } from 'zod';
 import { config } from './config.js';
+import { runMigrations } from './migrations.js';
 import { publicRouter } from './routes/public.js';
 import { adminRouter } from './routes/admin.js';
 import { BookingError } from './services/bookings.js';
@@ -49,5 +50,6 @@ app.use(errorHandler);
 
 await mongoose.connect(config.mongoUri, { dbName: config.mongoDbName });
 console.log('[db] conectado a MongoDB');
+await runMigrations();
 startJobs();
 app.listen(config.port, () => console.log(`[api] escuchando en el puerto ${config.port}`));
