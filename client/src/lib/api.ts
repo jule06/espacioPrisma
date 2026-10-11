@@ -8,6 +8,9 @@ export interface ServiceItem {
   id: string
   name: string
   description: string
+  details: string
+  benefits: string[]
+  idealFor: string
   durationMinutes: number
   price: number
   deposit: number

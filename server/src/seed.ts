@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { config } from './config.js';
+import { SERVICE_DETAILS } from './data/serviceDetails.js';
 import { Business, Professional, Service } from './models/index.js';
 
 // Datos de ejemplo. Los IDs de Google Calendar de cada profesional se pasan por
@@ -41,7 +42,7 @@ await Service.create([
   { name: 'Relajante Profundo', description: 'Todo el cuerpo', durationMinutes: 50, price: 40000, order: 3 },
   { name: 'Masaje Integral', description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana (10% de descuento para alumnas de "Shyvana Pilates")', durationMinutes: 50, price: 45000, order: 4 },
   { name: 'Reflexología podal o palmar', description: '', durationMinutes: 40, price: 30000, order: 5 },
-]);
+].map((s) => ({ ...s, ...SERVICE_DETAILS[s.name] })));
 
 console.log('Datos de ejemplo cargados.');
 await mongoose.disconnect();

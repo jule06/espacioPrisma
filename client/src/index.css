@@ -1209,3 +1209,112 @@ a.btn.secondary,
 a.btn.ghost {
   color: var(--ink);
 }
+
+/* ---------- "+ info" de servicios ---------- */
+
+.l-service-actions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.l-service-actions .btn {
+  margin-top: 0;
+}
+.l-service-actions .btn.ghost {
+  color: var(--accent);
+  border: 1px solid transparent;
+}
+.l-service-actions .btn.ghost:hover {
+  border-color: var(--line);
+  color: var(--accent);
+}
+
+.service-info {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius) * 1.3);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 20px 60px rgb(59 42 35 / 0.25);
+}
+.service-info::backdrop {
+  background: rgb(59 42 35 / 0.45);
+  backdrop-filter: blur(2px);
+}
+.service-info-body {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.75rem;
+}
+.service-info-body h2 {
+  font-size: 1.6rem;
+  margin: 0.25rem 0 0;
+}
+.service-info-body p {
+  margin: 0;
+}
+.service-info-body section {
+  margin-top: 0.75rem;
+}
+.service-info-body h3 {
+  font-family: var(--condensed);
+  font-weight: 400;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+.service-info-body > .btn {
+  margin-top: 1.25rem;
+}
+.service-info-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem;
+  color: var(--muted);
+}
+.service-info-meta strong {
+  color: var(--ink);
+}
+.service-info-benefits {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.service-info-benefits li {
+  position: relative;
+  padding-left: 1.3rem;
+}
+.service-info-benefits li::before {
+  content: '';
+  position: absolute;
+  left: 0.15rem;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+.service-info-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface-2);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+.service-info-close:hover {
+  background: var(--sand);
+}

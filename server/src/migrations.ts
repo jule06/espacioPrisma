@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { SERVICE_DETAILS } from './data/serviceDetails.js';
 import { Business, Service } from './models/index.js';
 
 /**
@@ -24,6 +25,15 @@ const MIGRATIONS: { id: string; run: () => Promise<void> }[] = [
         { description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana' },
         { $set: { description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana (10% de descuento para alumnas de "Shyvana Pilates")' } },
       );
+    },
+  },
+  {
+    id: '2026-10-11-detalle-servicios',
+    run: async () => {
+      // Carga el detalle de "+ info" en los servicios que todavía no lo tienen.
+      for (const [name, detail] of Object.entries(SERVICE_DETAILS)) {
+        await Service.updateMany({ name, $or: [{ details: { $exists: false } }, { details: '' }] }, { $set: detail });
+      }
     },
   },
 ];

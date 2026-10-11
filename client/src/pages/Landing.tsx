@@ -1,4 +1,6 @@
-import type { BusinessInfo } from '../lib/api'
+import { useState } from 'react'
+import { ServiceInfo } from '../components/ServiceInfo'
+import type { BusinessInfo, ServiceItem } from '../lib/api'
 import { APPROACH, FAQ, INSTAGRAM_URL, PLACES, PROMO, WHATSAPP_DISPLAY, whatsappLink } from '../lib/content'
 import { money, todayKey } from '../lib/format'
 
@@ -22,6 +24,7 @@ export function Landing({ business, onBook }: Props) {
   const promoActive = todayKey() <= PROMO.until
   const promoService = business.services.find((s) => s.name === PROMO.serviceName)
   const pro = business.professionals[0]
+  const [infoService, setInfoService] = useState<ServiceItem | null>(null)
 
   return (
     <div className="landing">
@@ -90,13 +93,30 @@ export function Landing({ business, onBook }: Props) {
                 <span>{s.durationMinutes} min</span>
                 <strong>{money(s.price)}</strong>
               </p>
-              <button className="btn secondary" onClick={() => onBook(s.id)}>
-                Reservar
-              </button>
+              <div className="l-service-actions">
+                {(s.details || s.benefits?.length > 0) && (
+                  <button className="btn ghost" onClick={() => setInfoService(s)}>
+                    + info
+                  </button>
+                )}
+                <button className="btn secondary" onClick={() => onBook(s.id)}>
+                  Reservar
+                </button>
+              </div>
             </article>
           ))}
         </div>
       </section>
+
+      <ServiceInfo
+        service={infoService}
+        icon={infoService ? iconFor(infoService.name) : ''}
+        onClose={() => setInfoService(null)}
+        onBook={(id) => {
+          setInfoService(null)
+          onBook(id)
+        }}
+      />
 
       <section id="enfoque" className="l-section l-about">
         <div className="l-about-intro">

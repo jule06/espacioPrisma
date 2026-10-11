@@ -54,6 +54,10 @@ const serviceSchema = new Schema(
   {
     name: { type: String, required: true },
     description: { type: String, default: '' },
+    // Detalle para la ventana "+ info" de la landing.
+    details: { type: String, default: '' },
+    benefits: { type: [String], default: [] },
+    idealFor: { type: String, default: '' },
     durationMinutes: { type: Number, required: true },
     price: { type: Number, required: true },
     active: { type: Boolean, default: true },
