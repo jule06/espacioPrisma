@@ -39,7 +39,7 @@ await Service.create([
   { name: 'Masaje Descontracturante', description: 'Espalda, cuello, hombros y cráneo', durationMinutes: 30, price: 30000, order: 1 },
   { name: 'Masaje Circulatorio', description: 'Piernas cansadas', durationMinutes: 30, price: 30000, order: 2 },
   { name: 'Relajante Profundo', description: 'Todo el cuerpo', durationMinutes: 50, price: 40000, order: 3 },
-  { name: 'Masaje Integral', description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana', durationMinutes: 50, price: 45000, order: 4 },
+  { name: 'Masaje Integral', description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana (10% de descuento para alumnas de "Shyvana Pilates")', durationMinutes: 50, price: 45000, order: 4 },
   { name: 'Reflexología podal o palmar', description: '', durationMinutes: 40, price: 30000, order: 5 },
 ]);
 

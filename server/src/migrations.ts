@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { Business } from './models/index.js';
+import { Business, Service } from './models/index.js';
 
 /**
  * Cambios de datos que corren una sola vez al arrancar el servidor.
@@ -14,6 +14,15 @@ const MIGRATIONS: { id: string; run: () => Promise<void> }[] = [
       await Business.updateMany(
         { address: 'Av. Corrientes 1234 · CABA' },
         { $set: { address: 'Liniers · Versalles · Flores · A domicilio', hoursLabel: '' } },
+      );
+    },
+  },
+  {
+    id: '2026-10-11-descuento-shyvana',
+    run: async () => {
+      await Service.updateMany(
+        { description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana' },
+        { $set: { description: 'Todo el cuerpo. Relajante + Descontracturante · Para alumnas/os de Shyvana (10% de descuento para alumnas de "Shyvana Pilates")' } },
       );
     },
   },
