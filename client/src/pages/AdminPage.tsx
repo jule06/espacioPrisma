@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { adminToken, api, ApiError, type AdminBooking, type CalendarStatus } from '../lib/api'
+import { ServicesEditor } from '../components/ServicesEditor'
 import { capitalize, formatDay, formatTime, money, timeAgo } from '../lib/format'
 
 const POLL_MS = 20_000
@@ -205,6 +206,7 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
   const [calendar, setCalendar] = useState<CalendarStatus | null>(null)
   const [me, setMe] = useState('')
   const [error, setError] = useState('')
+  const [view, setView] = useState<'bookings' | 'services'>('bookings')
   const seen = useRef<Set<string> | null>(null)
 
   const load = useCallback(async () => {
@@ -248,9 +250,11 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
     <section className="panel">
       <div className="panel-head">
         <div>
-          <h1>Señas por confirmar</h1>
+          <h1>{view === 'bookings' ? 'Señas por confirmar' : 'Servicios'}</h1>
           <p className="muted">
-            Al confirmar, el turno se escribe en el Google Calendar de quien atiende y a la clienta le llega la confirmación.
+            {view === 'bookings'
+              ? 'Al confirmar, el turno se escribe en el Google Calendar de quien atiende y a la clienta le llega la confirmación.'
+              : 'Editá la información que ven las clientas en la página.'}
           </p>
         </div>
         <div className="session">
@@ -261,6 +265,20 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
         </div>
       </div>
 
+      <div className="panel-views" role="tablist" aria-label="Secciones del panel">
+        <button role="tab" aria-selected={view === 'bookings'} className={view === 'bookings' ? 'active' : ''} onClick={() => setView('bookings')}>
+          Señas y turnos
+          {pending && pending.length > 0 && <span className="count">{pending.length}</span>}
+        </button>
+        <button role="tab" aria-selected={view === 'services'} className={view === 'services' ? 'active' : ''} onClick={() => setView('services')}>
+          Servicios
+        </button>
+      </div>
+
+      {view === 'services' ? (
+        <ServicesEditor onUnauthorized={onLogout} />
+      ) : (
+      <>
       <div className="card note">
         🔔 Cada seña nueva suena en esta pestaña y te llega un correo. Si pasa una hora sin confirmarla, te lo recordamos.
       </div>
@@ -322,6 +340,8 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
             </li>
           ))}
         </ul>
+      )}
+      </>
       )}
     </section>
   )

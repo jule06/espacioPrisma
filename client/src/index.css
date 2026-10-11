@@ -1318,3 +1318,95 @@ a.btn.ghost {
 .service-info-close:hover {
   background: var(--sand);
 }
+
+/* ---------- Panel: secciones y editor de servicios ---------- */
+
+.panel-views {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  margin: 1.25rem 0 0.5rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+}
+.panel-views button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.85rem;
+}
+.panel-views button.active {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgb(59 42 35 / 0.12);
+}
+
+.service-editor {
+  padding: 0;
+  overflow: hidden;
+}
+.service-editor-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 0;
+  background: none;
+  text-align: left;
+}
+.service-editor-head > span:first-child {
+  display: grid;
+}
+.service-editor-toggle {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.service-editor-form {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0 1.25rem 1.25rem;
+  border-top: 1px solid var(--line);
+  padding-top: 1rem;
+}
+.service-editor-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.service-editor-form textarea {
+  font: inherit;
+  width: 100%;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  resize: vertical;
+  line-height: 1.5;
+}
+.service-editor-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.service-editor-form .actions {
+  align-items: center;
+  margin-top: 0;
+}
+.saved-note {
+  color: var(--ok);
+  font-size: 0.9rem;
+  font-weight: 500;
+}

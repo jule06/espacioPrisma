@@ -4,7 +4,7 @@ import { Router, type Request, type RequestHandler, type Response } from 'expres
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { config } from '../config.js';
-import { Booking, GoogleConnection, Professional, type BookingDoc } from '../models/index.js';
+import { Booking, GoogleConnection, Professional, Service, type BookingDoc } from '../models/index.js';
 import { confirmBooking, rejectBooking } from '../services/bookings.js';
 import { calendarStatus } from '../services/calendar.js';
 import { authUrl, exchangeCode, isGoogleConfigured, oauthClient } from '../services/google.js';
@@ -182,6 +182,39 @@ adminRouter.post('/calendar/disconnect', async (_req, res) => {
     await GoogleConnection.deleteMany({});
   }
   res.json({ calendar: await calendarStatus() });
+});
+
+// ---------- Servicios (contenido de "+ info") ----------
+
+const toAdminService = (s: InstanceType<typeof Service>) => ({
+  id: s.id,
+  name: s.name,
+  description: s.description,
+  details: s.details,
+  benefits: s.benefits,
+  idealFor: s.idealFor,
+  durationMinutes: s.durationMinutes,
+  price: s.price,
+  active: s.active,
+});
+
+adminRouter.get('/services', async (_req, res) => {
+  const services = await Service.find().sort({ order: 1 });
+  res.json({ services: services.map(toAdminService) });
+});
+
+const serviceContentSchema = z.object({
+  description: z.string().trim().max(300),
+  details: z.string().trim().max(2000),
+  benefits: z.array(z.string().trim().min(1).max(200)).max(12),
+  idealFor: z.string().trim().max(500),
+});
+
+adminRouter.patch('/services/:id', async (req, res) => {
+  const data = serviceContentSchema.parse(req.body);
+  const service = await Service.findByIdAndUpdate(req.params.id, { $set: data }, { new: true });
+  if (!service) return res.status(404).json({ error: 'Servicio no encontrado.' });
+  res.json({ service: toAdminService(service) });
 });
 
 // ---------- Turnos ----------

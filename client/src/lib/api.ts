@@ -86,6 +86,22 @@ export interface AdminBooking {
   createdAt: string
 }
 
+/** Lo que se edita desde el panel: la descripción corta y el contenido de "+ info". */
+export interface ServiceContent {
+  description: string
+  details: string
+  benefits: string[]
+  idealFor: string
+}
+
+export interface AdminService extends ServiceContent {
+  id: string
+  name: string
+  durationMinutes: number
+  price: number
+  active: boolean
+}
+
 export interface CalendarStatus {
   configured: boolean
   connected: boolean
@@ -174,6 +190,9 @@ export const api = {
     devLogin: () => request<{ token: string }>('/admin/auth/dev', post()),
     me: () => request<{ email: string }>('/admin/me', {}, true),
     status: () => request<{ calendar: CalendarStatus }>('/admin/status', {}, true),
+    services: () => request<{ services: AdminService[] }>('/admin/services', {}, true),
+    updateService: (id: string, data: ServiceContent) =>
+      request<{ service: AdminService }>(`/admin/services/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true),
     disconnectCalendar: () => request<{ calendar: CalendarStatus }>('/admin/calendar/disconnect', post(), true),
     pending: () => request<{ bookings: AdminBooking[] }>('/admin/bookings/pending', {}, true),
     upcoming: () => request<{ bookings: AdminBooking[] }>('/admin/bookings/upcoming', {}, true),
