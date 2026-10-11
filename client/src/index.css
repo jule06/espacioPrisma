@@ -1515,3 +1515,41 @@ a.btn.ghost {
 .panel-views {
   flex-wrap: wrap;
 }
+
+/* ---------- Logo ---------- */
+
+/* El logo tiene fondo blanco: "multiply" lo funde con el fondo crema. */
+.logo-blend {
+  mix-blend-mode: multiply;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  margin: -4px 0;
+}
+.brand-text {
+  display: grid;
+  line-height: 1;
+}
+.l-hero-logo {
+  display: block;
+  width: clamp(150px, 22vw, 210px);
+  height: auto;
+  margin: -1.5rem auto 0.5rem;
+}
+.l-footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.login-logo {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 0.25rem;
+}

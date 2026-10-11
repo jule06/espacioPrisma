@@ -30,7 +30,7 @@ export function Landing({ business, onBook }: Props) {
   return (
     <div className="landing">
       <section className="l-hero">
-        <div className="prism-line" aria-hidden="true" />
+        <img className="l-hero-logo logo-blend" src="/android-chrome-512x512.png" alt="Espacio Prisma" width="512" height="512" />
         <span className="script">Masoterapia Integral</span>
         <h1>
           Liberá el estrés
@@ -191,7 +191,8 @@ export function Landing({ business, onBook }: Props) {
       </section>
 
       <footer className="l-footer">
-        <span>
+        <span className="l-footer-brand">
+          <img className="logo-blend" src="/android-chrome-192x192.png" alt="" width="36" height="36" />
           {business.name} · Masoterapia Integral 🌈
         </span>
         <span>

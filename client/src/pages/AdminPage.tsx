@@ -89,6 +89,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
 
   return (
     <section className="panel narrow">
+      <img className="login-logo logo-blend" src="/android-chrome-192x192.png" alt="Espacio Prisma" width="96" height="96" />
       <span className="script">Bienvenida</span>
       <h1>Panel del local</h1>
       <p className="muted">Ingresá con tu cuenta de Google para confirmar las señas.</p>

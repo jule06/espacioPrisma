@@ -103,8 +103,11 @@ export default function App() {
     <div className="app">
       <header className="site-header">
         <NavLink href="/" className="brand">
-          Prisma
-          <span className="brand-sub">Masoterapia Integral</span>
+          <img className="brand-logo logo-blend" src="/android-chrome-192x192.png" alt="" width="44" height="44" />
+          <span className="brand-text">
+            Prisma
+            <span className="brand-sub">Masoterapia Integral</span>
+          </span>
         </NavLink>
         <nav aria-label="Secciones">
           <SectionLink id="servicios" onLanding={onLanding}>
