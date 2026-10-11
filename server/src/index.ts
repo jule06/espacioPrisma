@@ -17,6 +17,12 @@ mkdirSync(config.uploadsDir, { recursive: true });
 const app = express();
 // Detrás del proxy de Railway / túneles: para leer bien X-Forwarded-*.
 app.set('trust proxy', 1);
+// www.dominio → dominio (el de CLIENT_URL), para tener una sola dirección.
+const canonical = new URL(config.clientUrl);
+app.use((req, res, next) => {
+  if (req.hostname === `www.${canonical.hostname}`) return res.redirect(301, `${canonical.origin}${req.originalUrl}`);
+  next();
+});
 app.use(cors({ origin: config.appOrigins }));
 app.use(express.json());
 

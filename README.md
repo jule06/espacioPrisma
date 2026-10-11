@@ -76,6 +76,17 @@ Un solo servicio: Express sirve la API y el front compilado (`client/dist`). La 
 7. El primer arranque carga los datos iniciales (local, profesional, servicios) si la base está vacía; los siguientes no tocan nada.
 8. Entrar a `/panel`, ingresar con Google y **Conectar Google Calendar** (la conexión de desarrollo no se copia: es otra base).
 
+### Dominio propio (miespacioprisma.com.ar con Cloudflare)
+
+1. Cloudflare → Add a domain → plan Free → anotar los 2 nameservers.
+2. NIC Argentina → Dominios → Delegaciones: reemplazar por los nameservers de Cloudflare.
+3. Railway → Settings → Networking → Custom Domain: agregar `miespacioprisma.com.ar` y `www.miespacioprisma.com.ar`.
+4. Cloudflare → DNS: un CNAME `@` y otro `www` con los destinos que da Railway (y el TXT de verificación si lo pide). Empezar con proxy gris (DNS only); si se activa el naranja, SSL/TLS en **Full**.
+5. Variables de Railway: `CLIENT_URL=https://miespacioprisma.com.ar` y `APP_ORIGINS=https://www.miespacioprisma.com.ar,https://espacioprisma-production.up.railway.app`.
+6. Google Cloud: agregar los orígenes y URIs de redirección del dominio, y el dominio autorizado en la pantalla de consentimiento.
+
+`www.` redirige solo al dominio principal (el de `CLIENT_URL`).
+
 ## Emails
 
 Configurar `SMTP_*`, `MAIL_FROM` y `NOTIFY_EMAIL` en `server/.env`. Sin SMTP, los correos se imprimen en la consola del servidor.
