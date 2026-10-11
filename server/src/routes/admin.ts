@@ -4,7 +4,7 @@ import { Router, type Request, type RequestHandler, type Response } from 'expres
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { config } from '../config.js';
-import { Booking, GoogleConnection, Professional, Service, type BookingDoc } from '../models/index.js';
+import { Booking, GoogleConnection, Pack, Professional, Service, type BookingDoc } from '../models/index.js';
 import { confirmBooking, rejectBooking } from '../services/bookings.js';
 import { calendarStatus } from '../services/calendar.js';
 import { authUrl, exchangeCode, isGoogleConfigured, oauthClient } from '../services/google.js';
@@ -215,6 +215,43 @@ adminRouter.patch('/services/:id', async (req, res) => {
   const service = await Service.findByIdAndUpdate(req.params.id, { $set: data }, { new: true });
   if (!service) return res.status(404).json({ error: 'Servicio no encontrado.' });
   res.json({ service: toAdminService(service) });
+});
+
+// ---------- Packs mensuales ----------
+
+const toAdminPack = (p: InstanceType<typeof Pack>) => ({
+  id: p.id,
+  name: p.name,
+  subtitle: p.subtitle,
+  sessions: p.sessions,
+  includes: p.includes,
+  regularPrice: p.regularPrice,
+  price: p.price,
+  idealFor: p.idealFor,
+  active: p.active,
+});
+
+adminRouter.get('/packs', async (_req, res) => {
+  const packs = await Pack.find().sort({ order: 1 });
+  res.json({ packs: packs.map(toAdminPack) });
+});
+
+const packSchema = z.object({
+  name: z.string().trim().min(2, 'El pack necesita un nombre').max(120),
+  subtitle: z.string().trim().max(160),
+  sessions: z.string().trim().max(120),
+  includes: z.string().trim().max(600),
+  regularPrice: z.number().int().min(0).max(10_000_000),
+  price: z.number().int().min(0).max(10_000_000),
+  idealFor: z.string().trim().max(600),
+  active: z.boolean(),
+});
+
+adminRouter.patch('/packs/:id', async (req, res) => {
+  const data = packSchema.parse(req.body);
+  const pack = await Pack.findByIdAndUpdate(req.params.id, { $set: data }, { new: true });
+  if (!pack) return res.status(404).json({ error: 'Pack no encontrado.' });
+  res.json({ pack: toAdminPack(pack) });
 });
 
 // ---------- Turnos ----------

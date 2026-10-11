@@ -110,6 +110,9 @@ export default function App() {
           <SectionLink id="servicios" onLanding={onLanding}>
             Servicios
           </SectionLink>
+          <SectionLink id="packs" onLanding={onLanding}>
+            Packs
+          </SectionLink>
           <SectionLink id="lugares" onLanding={onLanding}>
             Dónde
           </SectionLink>

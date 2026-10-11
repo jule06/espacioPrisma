@@ -66,6 +66,22 @@ const serviceSchema = new Schema(
   { timestamps: true },
 );
 
+// Packs mensuales (varias sesiones al mes). Se muestran en la landing y se coordinan por WhatsApp.
+const packSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    subtitle: { type: String, default: '' },
+    sessions: { type: String, default: '' }, // "Semanal · 4 sesiones al mes"
+    includes: { type: String, default: '' },
+    regularPrice: { type: Number, default: 0 }, // precio sin pack (se muestra tachado)
+    price: { type: Number, required: true },
+    idealFor: { type: String, default: '' },
+    active: { type: Boolean, default: true },
+    order: { type: Number, default: 0 },
+  },
+  { timestamps: true },
+);
+
 export const BOOKING_STATUSES = [
   'awaiting_receipt', // reservado, falta subir el comprobante de la seña
   'awaiting_approval', // comprobante subido, el local tiene que confirmar
@@ -134,6 +150,7 @@ export const Business = model('Business', businessSchema);
 export const GoogleConnection = model('GoogleConnection', googleConnectionSchema);
 export const Professional = model('Professional', professionalSchema);
 export const Service = model('Service', serviceSchema);
+export const Pack = model('Pack', packSchema);
 export const Booking = model('Booking', bookingSchema);
 
 export type BusinessDoc = HydratedDocument<InferSchemaType<typeof businessSchema>>;

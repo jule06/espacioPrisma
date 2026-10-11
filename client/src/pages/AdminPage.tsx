@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { adminToken, api, ApiError, type AdminBooking, type CalendarStatus } from '../lib/api'
+import { PacksEditor } from '../components/PacksEditor'
 import { ServicesEditor } from '../components/ServicesEditor'
 import { capitalize, formatDay, formatTime, money, timeAgo } from '../lib/format'
 
@@ -206,7 +207,7 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
   const [calendar, setCalendar] = useState<CalendarStatus | null>(null)
   const [me, setMe] = useState('')
   const [error, setError] = useState('')
-  const [view, setView] = useState<'bookings' | 'services'>('bookings')
+  const [view, setView] = useState<'bookings' | 'services' | 'packs'>('bookings')
   const seen = useRef<Set<string> | null>(null)
 
   const load = useCallback(async () => {
@@ -250,7 +251,7 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
     <section className="panel">
       <div className="panel-head">
         <div>
-          <h1>{view === 'bookings' ? 'Señas por confirmar' : 'Servicios'}</h1>
+          <h1>{view === 'bookings' ? 'Señas por confirmar' : view === 'services' ? 'Servicios' : 'Packs mensuales'}</h1>
           <p className="muted">
             {view === 'bookings'
               ? 'Al confirmar, el turno se escribe en el Google Calendar de quien atiende y a la clienta le llega la confirmación.'
@@ -273,10 +274,15 @@ function Dashboard({ onPendingCount, onLogout }: { onPendingCount: (n: number) =
         <button role="tab" aria-selected={view === 'services'} className={view === 'services' ? 'active' : ''} onClick={() => setView('services')}>
           Servicios
         </button>
+        <button role="tab" aria-selected={view === 'packs'} className={view === 'packs' ? 'active' : ''} onClick={() => setView('packs')}>
+          Packs
+        </button>
       </div>
 
       {view === 'services' ? (
         <ServicesEditor onUnauthorized={onLogout} />
+      ) : view === 'packs' ? (
+        <PacksEditor onUnauthorized={onLogout} />
       ) : (
       <>
       <div className="card note">

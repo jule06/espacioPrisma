@@ -1410,3 +1410,108 @@ a.btn.ghost {
   font-size: 0.9rem;
   font-weight: 500;
 }
+
+/* ---------- Packs mensuales ---------- */
+
+.l-packs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+.l-pack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.4rem;
+}
+.l-pack h3 {
+  font-size: 1.25rem;
+  margin: 0.25rem 0 0;
+}
+.l-pack p {
+  margin: 0;
+}
+.l-pack-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.4rem;
+}
+.l-pack-sessions {
+  font-family: var(--condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.78rem;
+  color: var(--ok);
+  background: var(--ok-soft);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+.l-pack-saving {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--blush);
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+}
+.l-pack-subtitle {
+  color: var(--accent);
+  font-weight: 500;
+}
+.l-pack-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding-top: 0.6rem;
+  margin-top: 0.25rem !important;
+  border-top: 1px solid var(--line);
+}
+.l-pack-price strong {
+  font-size: 1.45rem;
+  color: var(--ink);
+}
+.l-pack-ideal {
+  display: grid;
+  gap: 0.2rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+.l-pack-ideal span {
+  font-family: var(--condensed);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+  color: var(--ink);
+}
+.l-pack .btn {
+  margin-top: auto;
+}
+.l-pack-ideal {
+  margin-bottom: 0.75rem !important;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+.service-editor-form label.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+.service-editor-form label.checkbox input {
+  width: auto;
+}
+.service-editor.inactive .service-editor-head strong {
+  color: var(--muted);
+}
+.panel-views {
+  flex-wrap: wrap;
+}

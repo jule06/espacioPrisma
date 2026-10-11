@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { PacksSection } from '../components/PacksSection'
 import { ServiceInfo } from '../components/ServiceInfo'
 import type { BusinessInfo, ServiceItem } from '../lib/api'
 import { APPROACH, FAQ, INSTAGRAM_URL, PLACES, PROMO, WHATSAPP_DISPLAY, whatsappLink } from '../lib/content'
@@ -107,6 +108,8 @@ export function Landing({ business, onBook }: Props) {
           ))}
         </div>
       </section>
+
+      <PacksSection />
 
       <ServiceInfo
         service={infoService}

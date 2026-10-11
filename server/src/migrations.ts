@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
+import { PACKS } from './data/packs.js';
 import { SERVICE_DETAILS } from './data/serviceDetails.js';
-import { Business, Service } from './models/index.js';
+import { Business, Pack, Service } from './models/index.js';
 
 /**
  * Cambios de datos que corren una sola vez al arrancar el servidor.
@@ -34,6 +35,13 @@ const MIGRATIONS: { id: string; run: () => Promise<void> }[] = [
       for (const [name, detail] of Object.entries(SERVICE_DETAILS)) {
         await Service.updateMany({ name, $or: [{ details: { $exists: false } }, { details: '' }] }, { $set: detail });
       }
+    },
+  },
+  {
+    id: '2026-10-11-packs-mensuales',
+    run: async () => {
+      // Carga los packs solo si todavía no hay ninguno.
+      if (!(await Pack.exists({}))) await Pack.insertMany(PACKS);
     },
   },
 ];

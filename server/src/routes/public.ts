@@ -4,7 +4,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { z } from 'zod';
 import { config } from '../config.js';
-import { Business, Professional, Service } from '../models/index.js';
+import { Business, Pack, Professional, Service } from '../models/index.js';
 import { getDaySlots, getMonthAvailability } from '../services/availability.js';
 import { devOutbox, devOutboxEnabled } from '../services/mailer.js';
 import { attachReceipt, cancelBooking, createBooking, findByCode, rescheduleBooking, toPublic } from '../services/bookings.js';
@@ -49,6 +49,23 @@ publicRouter.get('/business', async (_req, res) => {
       durationMinutes: s.durationMinutes,
       price: s.price,
       deposit: Math.round((s.price * business.depositPercent) / 100),
+    })),
+  });
+});
+
+/** Packs mensuales activos para la landing. */
+publicRouter.get('/packs', async (_req, res) => {
+  const packs = await Pack.find({ active: true }).sort({ order: 1 });
+  res.json({
+    packs: packs.map((p) => ({
+      id: p.id,
+      name: p.name,
+      subtitle: p.subtitle,
+      sessions: p.sessions,
+      includes: p.includes,
+      regularPrice: p.regularPrice,
+      price: p.price,
+      idealFor: p.idealFor,
     })),
   });
 });

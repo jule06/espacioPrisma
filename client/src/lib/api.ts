@@ -86,6 +86,24 @@ export interface AdminBooking {
   createdAt: string
 }
 
+export interface PackContent {
+  name: string
+  subtitle: string
+  sessions: string
+  includes: string
+  regularPrice: number
+  price: number
+  idealFor: string
+}
+
+export interface Pack extends PackContent {
+  id: string
+}
+
+export interface AdminPack extends Pack {
+  active: boolean
+}
+
 /** Lo que se edita desde el panel: la descripción corta y el contenido de "+ info". */
 export interface ServiceContent {
   description: string
@@ -166,6 +184,7 @@ const q = encodeURIComponent
 
 export const api = {
   business: () => request<BusinessInfo>('/business'),
+  packs: () => request<{ packs: Pack[] }>('/packs'),
   month: (month: string, serviceId?: string) =>
     request<{ days: Record<string, boolean> }>(`/availability/month?month=${month}&serviceId=${serviceId ?? ''}`),
   day: (date: string, serviceId?: string) =>
@@ -193,6 +212,9 @@ export const api = {
     services: () => request<{ services: AdminService[] }>('/admin/services', {}, true),
     updateService: (id: string, data: ServiceContent) =>
       request<{ service: AdminService }>(`/admin/services/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true),
+    packs: () => request<{ packs: AdminPack[] }>('/admin/packs', {}, true),
+    updatePack: (id: string, data: PackContent & { active: boolean }) =>
+      request<{ pack: AdminPack }>(`/admin/packs/${id}`, { method: 'PATCH', body: JSON.stringify(data) }, true),
     disconnectCalendar: () => request<{ calendar: CalendarStatus }>('/admin/calendar/disconnect', post(), true),
     pending: () => request<{ bookings: AdminBooking[] }>('/admin/bookings/pending', {}, true),
     upcoming: () => request<{ bookings: AdminBooking[] }>('/admin/bookings/upcoming', {}, true),
